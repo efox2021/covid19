@@ -30,7 +30,7 @@ async function main() {
       }
   `;
 
-  const variablesAmes = {"radius":100,"latitude":42.0307812,"longitude":-93.63191309999999}
+  const variablesAmes = {"radius":120,"latitude":42.0307812,"longitude":-93.63191309999999}
   const variablesDSM = {"radius":30,"latitude":41.5868353,"longitude":-93.6249593}
   const dataAmes = await request(endpoint, query, variablesAmes)
   const dataDSM = await request(endpoint, query, variablesDSM)
