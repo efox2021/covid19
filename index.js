@@ -1,6 +1,7 @@
 const { request, gql } =  require('graphql-request');
 const nodemailer = require('nodemailer');
 const stringify = require('json-stringify');
+require('dotenv').config()
 
 async function main() {
 
@@ -59,8 +60,8 @@ async function main() {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'covidchecker10000@gmail.com',
-      pass: 'albertEinstein69!'
+      user: process.env.EMAIL,
+      pass: process.env.PASS
     }
   });
 
