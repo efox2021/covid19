@@ -76,7 +76,8 @@ async function main() {
     'Sarah.Fox@delphix.com',
     'sarahcloudfox@gmail.com',
     'annulus10@yahoo.com',
-    'Tim.fox@corteva.com'
+    'Tim.fox@corteva.com',
+    'Caitlain.fox@gmail.com'
   ]
 
   var mailOptions = {
