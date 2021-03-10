@@ -29,19 +29,31 @@ async function main() {
       }
   `;
 
-  const variables = {"radius":100,"latitude":42.0307812,"longitude":-93.63191309999999}
-  const data = await request(endpoint, query, variables)
+  const variablesAmes = {"radius":100,"latitude":42.0307812,"longitude":-93.63191309999999}
+  const variablesDSM = {"radius":30,"latitude":41.5868353,"longitude":-93.6249593}
+  const dataAmes = await request(endpoint, query, variablesAmes)
+  const dataDSM = await request(endpoint, query, variablesDSM)
 
-  const { searchPharmaciesNearPoint } = data;
-  let pharmaciesWithVaccines = [];
+  const ames = dataAmes.searchPharmaciesNearPoint;
+  const dsm = dataDSM.searchPharmaciesNearPoint;
+  let pharmaciesWithVaccinesAmes = [];
+  let pharmaciesWithVaccinesDSM = [];
 
-  //filter through data to find ones with isCovidVaccineAvailable
-  for(let val of searchPharmaciesNearPoint){
+
+  //filter through dataAmes to find ones with isCovidVaccineAvailable
+  for(let val of ames){
     if(val.location.isCovidVaccineAvailable){
-      pharmaciesWithVaccines.push(val);
+      pharmaciesWithVaccinesAmes.push(val);
     }
   }
-  // console.log(pharmaciesWithVaccines);
+
+  //filter through dataAmes to find ones with isCovidVaccineAvailable
+  for(let val of dsm){
+    if(val.location.isCovidVaccineAvailable){
+      pharmaciesWithVaccinesDSM.push(val);
+    }
+  }
+  // console.log(pharmaciesWithVaccinesAmes);
 
   //send email
   var transporter = nodemailer.createTransport({
@@ -58,21 +70,43 @@ async function main() {
     'tmnesbit@iastate.edu'
   ]
 
+  var maillist2 = [
+    'tasewell.fox@gmail.com',
+    'jayhawker78@gmail.com'
+  ]
+
   var mailOptions = {
     from: 'covidchecker10000@gmail.com',
     to: maillist,
     subject: 'Covid Vaccines Available',
-    text: 'The following pharmacies are available in a ' + variables.radius + ' mile radius from Ames, Iowa: ' + stringify(pharmaciesWithVaccines, null, 1)
+    text: 'The following pharmacies are available in a ' + variablesAmes.radius + ' mile radius from Ames, Iowa: ' + stringify(pharmaciesWithVaccinesAmes, null, 1)
   };
 
-  if(pharmaciesWithVaccines.length !== 0){
+  var mailOptions2 = {
+    from: 'covidchecker10000@gmail.com',
+    to: maillist2,
+    subject: 'Covid Vaccines Available',
+    text: 'The following pharmacies are available in a ' + variablesDSM.radius + ' mile radius from Des Moines, Iowa: ' + stringify(pharmaciesWithVaccinesDSM, null, 1)
+  };
+
+  if(pharmaciesWithVaccinesAmes.length !== 0){
   transporter.sendMail(mailOptions, function(error, info) {
     if(error) {
       console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log('Email sent to Ames Group: ' + info.response);
     }
   });
+};
+
+if(pharmaciesWithVaccinesDSM.length !== 0){
+transporter.sendMail(mailOptions2, function(error, info) {
+  if(error) {
+    console.log(error);
+  } else {
+    console.log('TEST: Email sent to DSM Group: ' + info.response);
+  }
+});
 };
 
 
