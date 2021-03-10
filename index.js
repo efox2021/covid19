@@ -72,21 +72,25 @@ async function main() {
 
   var maillist2 = [
     'tasewell.fox@gmail.com',
-    'jayhawker78@gmail.com'
+    'jayhawker78@gmail.com',
+    'Sarah.Fox@delphix.com',
+    'sarahcloudfox@gmail.com',
+    'annulus10@yahoo.com',
+    'Tim.fox@corteva.com'
   ]
 
   var mailOptions = {
     from: 'covidchecker10000@gmail.com',
     to: maillist,
     subject: 'Covid Vaccines Available',
-    text: 'The following pharmacies are available in a ' + variablesAmes.radius + ' mile radius from Ames, Iowa: ' + stringify(pharmaciesWithVaccinesAmes, null, 1)
+    text: 'The following pharmacies are available in a ' + variablesAmes.radius + ' mile radius from Ames, Iowa: ' + stringify(pharmaciesWithVaccinesAmes, null, 1) + '\n Visit https://www.hy-vee.com/my-pharmacy/covid-vaccine-consent for more info'
   };
 
   var mailOptions2 = {
     from: 'covidchecker10000@gmail.com',
     to: maillist2,
     subject: 'Covid Vaccines Available',
-    text: 'The following pharmacies are available in a ' + variablesDSM.radius + ' mile radius from Des Moines, Iowa: ' + stringify(pharmaciesWithVaccinesDSM, null, 1)
+    text: 'The following pharmacies are available in a ' + variablesDSM.radius + ' mile radius from Des Moines, Iowa: ' + stringify(pharmaciesWithVaccinesDSM, null, 1) + '\n Visit https://www.hy-vee.com/my-pharmacy/covid-vaccine-consent for more info'
   };
 
   if(pharmaciesWithVaccinesAmes.length !== 0){
