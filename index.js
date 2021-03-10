@@ -1,12 +1,9 @@
 const { request, gql } =  require('graphql-request');
 const nodemailer = require('nodemailer');
 const stringify = require('json-stringify');
-const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler')
-
 
 async function main() {
 
-  // cron.scheduleJob('15 * * * * *', function(){});
   const endpoint = 'https://www.hy-vee.com/my-pharmacy/api/graphql';
 
   const query = gql`
@@ -32,7 +29,7 @@ async function main() {
       }
   `;
 
-  const variables = {"radius":300,"latitude":42.0307812,"longitude":-93.63191309999999}
+  const variables = {"radius":100,"latitude":42.0307812,"longitude":-93.63191309999999}
   const data = await request(endpoint, query, variables)
 
   const { searchPharmaciesNearPoint } = data;
