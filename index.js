@@ -30,8 +30,8 @@ async function main() {
       }
   `;
 
-  const variablesAmes = {"radius":120,"latitude":42.0307812,"longitude":-93.63191309999999}
-  const variablesDSM = {"radius":30,"latitude":41.5868353,"longitude":-93.6249593}
+  const variablesAmes = {"radius":75,"latitude":44.9778,"longitude":-93.2650}
+  const variablesDSM = {"radius":75,"latitude":41.5868353,"longitude":-93.6249593}
   const dataAmes = await request(endpoint, query, variablesAmes)
   const dataDSM = await request(endpoint, query, variablesDSM)
 
@@ -66,26 +66,28 @@ async function main() {
   });
 
   var maillist = [
-    'yousef.absi@gmail.com',
     'jayhawker78@gmail.com',
-    'tmnesbit@iastate.edu'
+    'Diane.m.hubbell@gmail.com',
+    'Jvnesbit@gmail.com'
   ]
 
   var maillist2 = [
-    'tasewell.fox@gmail.com',
     'jayhawker78@gmail.com',
-    'Sarah.Fox@delphix.com',
-    'sarahcloudfox@gmail.com',
-    'annulus10@yahoo.com',
-    'Tim.fox@corteva.com',
-    'Caitlain.fox@gmail.com'
+    'Carrie@iowarealty.com',
+    'Brett.t.omeara@gmail.com',
+    'Jmpnesbit@gmail.com',
+    'Wmnesbit19@gmail.com',
+    'mollyfenske@gmail.com',
+    'ericanesbit3@gmail.com',
+    'Lindanesbit@mchsi.com',
+    'Debmiller@iowarealty.com'
   ]
 
   var mailOptions = {
     from: 'covidchecker10000@gmail.com',
     to: maillist,
     subject: 'Covid Vaccines Available',
-    text: 'The following pharmacies are available in a ' + variablesAmes.radius + ' mile radius from Ames, Iowa: ' + stringify(pharmaciesWithVaccinesAmes, null, 1) + '\n Visit https://www.hy-vee.com/my-pharmacy/covid-vaccine-consent for more info'
+    text: 'The following pharmacies are available in a ' + variablesAmes.radius + ' mile radius from Minneapolis, MN: ' + stringify(pharmaciesWithVaccinesAmes, null, 1) + '\n Visit https://www.hy-vee.com/my-pharmacy/covid-vaccine-consent for more info'
   };
 
   var mailOptions2 = {
@@ -100,7 +102,7 @@ async function main() {
     if(error) {
       console.log(error);
     } else {
-      console.log('Email sent to Ames Group: ' + info.response);
+      console.log('Email sent to Minneapolis Group: ' + info.response);
     }
   });
 };
@@ -119,7 +121,10 @@ transporter.sendMail(mailOptions2, function(error, info) {
 }
 
 //schedule task to run every 15 mins
-setInterval(main, 900000);
+// setInterval(main, 900000);
+
+//schedule task to run every 5 mins
+ setInterval(main, 300000);
 
 
 main().catch((error) => console.error(error))
