@@ -1,6 +1,8 @@
 const { request, gql } =  require('graphql-request');
 const nodemailer = require('nodemailer');
 const stringify = require('json-stringify');
+const { sendNotifications } = require('./notificationHandler');
+
 require('dotenv').config()
 
 async function main() {
@@ -83,6 +85,10 @@ async function main() {
     'Debmiller@iowarealty.com'
   ]
 
+  const somePushTokens = [
+    'ExponentPushToken[MzQQ2vAtg21-MLCDmvm4XR]' // Yousef's phone
+  ];
+
   var mailOptions = {
     from: 'covidchecker10000@gmail.com',
     to: maillist,
@@ -98,26 +104,25 @@ async function main() {
   };
 
   if(pharmaciesWithVaccinesAmes.length !== 0){
-  transporter.sendMail(mailOptions, function(error, info) {
-    if(error) {
-      console.log(error);
-    } else {
-      console.log('Email sent to Minneapolis Group: ' + info.response);
-    }
-  });
-};
+    sendNotifications(somePushTokens);
+    transporter.sendMail(mailOptions, function(error, info) {
+      if(error) {
+        console.log(error);
+      } else {
+        console.log('Email sent to Minneapolis Group: ' + info.response);
+      }
+    });
+  };
 
-if(pharmaciesWithVaccinesDSM.length !== 0){
-transporter.sendMail(mailOptions2, function(error, info) {
-  if(error) {
-    console.log(error);
-  } else {
-    console.log('TEST: Email sent to DSM Group: ' + info.response);
-  }
-});
-};
-
-
+  if(pharmaciesWithVaccinesDSM.length !== 0){
+    transporter.sendMail(mailOptions2, function(error, info) {
+      if(error) {
+        console.log(error);
+      } else {
+        console.log('TEST: Email sent to DSM Group: ' + info.response);
+      }
+    });
+  };
 }
 
 //schedule task to run every 15 mins
